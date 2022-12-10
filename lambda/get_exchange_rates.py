@@ -21,7 +21,6 @@ else:
     ENDPOINT_URL = None
 
 
-
 def handler(event, context):
     '''
     Lambda entry point.
