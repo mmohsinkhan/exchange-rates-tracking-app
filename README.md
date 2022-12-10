@@ -169,3 +169,15 @@ https://**********.execute-api.localhost.localstack.cloud:4566/prod/exchangerate
 # Curl for the API
 curl -X GET https://**********.execute-api.us-east-1.amazonaws.com/prod/exchangerates
 ```
+
+### **Run Tests**
+
+Install dependencies
+```bash
+$ pip install -r requirements-dev.txt
+```
+
+Execute tests
+```bash
+$ python3 -m pytest -v
+```
