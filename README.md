@@ -19,165 +19,26 @@ Once deployed, application exposes a REST API endpoint providing current exchang
 ### Sample Response
 ```javascript
 {
-	"updated_at": "2022-12-10",
-	"base_currency": "EUR",
-	"exchange_rates": [
-		{
-			"currency": "AUD",
-			"rate": "1.5553",
-			"change": "-0.0037"
-		},
-		{
-			"currency": "BGN",
-			"rate": "1.9558",
-			"change": "0.0"
-		},
-		{
-			"currency": "BRL",
-			"rate": "5.5457",
-			"change": "+0.0577"
-		},
-		{
-			"currency": "CAD",
-			"rate": "1.438",
-			"change": "+0.0073"
-		},
-		{
-			"currency": "CHF",
-			"rate": "0.9856",
-			"change": "-0.0033"
-		},
-		{
-			"currency": "CNY",
-			"rate": "7.3475",
-			"change": "+0.0151"
-		},
-		{
-			"currency": "CZK",
-			"rate": "24.293",
-			"change": "-0.031"
-		},
-		{
-			"currency": "DKK",
-			"rate": "7.4379",
-			"change": "-0.0003"
-		},
-		{
-			"currency": "GBP",
-			"rate": "0.8595",
-			"change": "-0.0031"
-		},
-		{
-			"currency": "HKD",
-			"rate": "8.2169",
-			"change": "+0.028"
-		},
-		{
-			"currency": "HRK",
-			"rate": "7.555",
-			"change": "-0.0003"
-		},
-		{
-			"currency": "HUF",
-			"rate": "417.53",
-			"change": "-0.13"
-		},
-		{
-			"currency": "IDR",
-			"rate": "16453.46",
-			"change": "+29.54"
-		},
-		{
-			"currency": "ILS",
-			"rate": "3.6128",
-			"change": "-0.0078"
-		},
-		{
-			"currency": "INR",
-			"rate": "86.9535",
-			"change": "+0.278"
-		},
-		{
-			"currency": "ISK",
-			"rate": "149.5",
-			"change": "0.0"
-		},
-		{
-			"currency": "JPY",
-			"rate": "143.3",
-			"change": "-0.45"
-		},
-		{
-			"currency": "KRW",
-			"rate": "1373.94",
-			"change": "-13.12"
-		},
-		{
-			"currency": "MXN",
-			"rate": "20.849",
-			"change": "+0.1501"
-		},
-		{
-			"currency": "MYR",
-			"rate": "4.6512",
-			"change": "+0.0255"
-		},
-		{
-			"currency": "NOK",
-			"rate": "10.5345",
-			"change": "+0.0465"
-		},
-		{
-			"currency": "NZD",
-			"rate": "1.6482",
-			"change": "-0.0065"
-		},
-		{
-			"currency": "PHP",
-			"rate": "58.47",
-			"change": "+0.237"
-		},
-		{
-			"currency": "PLN",
-			"rate": "4.6869",
-			"change": "+0.0016"
-		},
-		{
-			"currency": "RON",
-			"rate": "4.9224",
-			"change": "+0.0093"
-		},
-		{
-			"currency": "SEK",
-			"rate": "10.9188",
-			"change": "+0.0128"
-		},
-		{
-			"currency": "SGD",
-			"rate": "1.426",
-			"change": "+0.0004"
-		},
-		{
-			"currency": "THB",
-			"rate": "36.656",
-			"change": "+0.097"
-		},
-		{
-			"currency": "TRY",
-			"rate": "19.6872",
-			"change": "+0.0758"
-		},
-		{
-			"currency": "USD",
-			"rate": "1.0559",
-			"change": "+0.004"
-		},
-		{
-			"currency": "ZAR",
-			"rate": "18.2358",
-			"change": "+0.2133"
-		}
-	]
+    "updated_at": "2022-12-10",
+    "base_currency": "EUR",
+    "exchange_rates": [
+        {
+            "currency": "AUD",
+            "rate": "1.5553",
+            "change": "-0.0037"
+        },
+        {
+            "currency": "ISK",
+            "rate": "149.5",
+            "change": "0.0"
+        },
+        {
+            "currency": "USD",
+            "rate": "1.0559",
+            "change": "+0.004"
+        },
+		...
+    ]
 }
 ```
 
@@ -254,6 +115,10 @@ https://**********.execute-api.us-east-1.amazonaws.com/prod/exchangerates
 # Curl for the API
 curl -X GET https://**********.execute-api.us-east-1.amazonaws.com/prod/exchangerates
 ```
+(Optional) Delete application, removing allocated resources
+```bash
+$ cdk destroy
+```
 
 ### **Deploy locally on Localstack**
 
@@ -284,8 +149,8 @@ Deploy application on Localstack
 $ cdklocal deploy
 ```
 
-*TriggerFunction* in CDK is used to execute Lambda during deployment, for populating initial exchange rates data in database.
-Localstack does not support *TriggerFunction*. After deployment we have to manually invoke the Lambda function once.
+*TriggerFunction* in CDK is used to execute Lambda during deployment, for populating initial exchange rates data.
+Localstack does not support *TriggerFunction*. So after deployment Lambda function has be manually invoked once.
 ```bash
 # Get list of deployed Lambda functions
 $ awslocal lambda list-functions
