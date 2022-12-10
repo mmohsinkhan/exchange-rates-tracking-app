@@ -156,7 +156,7 @@ Localstack does not support *TriggerFunction*. So after deployment Lambda functi
 $ awslocal lambda list-functions
 # From the response, find Lambda having 'updateexchangerates' in function name
 # Manually invoke Lambda function to populate initial data in database
-$ awslocal lambda invoke --function-name <function name> outfile
+$ awslocal lambda invoke --function-name <function name> /dev/null
 ```
 
 Link to a local REST endpoint shall be printed on deployment console. Append resource name **exchangerates** to the link for exchange rates API
