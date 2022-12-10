@@ -105,7 +105,7 @@ Deploy application on AWS
 $ cdk deploy
 ```
 
-On successful deployment, link to a public REST endpoint shall be printed on console. Append resource name **exchangerates** to the link for exchange rates API
+On successful deployment, link to a public REST endpoint is printed on console. Append resource name **exchangerates** to the link for exchange rates API
 ```bash
 # Sample REST endpoint
 https://**********.execute-api.us-east-1.amazonaws.com/prod/
@@ -149,7 +149,7 @@ Deploy application on Localstack
 $ cdklocal deploy
 ```
 
-*TriggerFunction* in CDK is used to execute Lambda during deployment, for populating initial exchange rates data.
+*TriggerFunction* from CDK executes a Lambda function during deployment, for populating initial exchange rates data.
 Localstack does not support *TriggerFunction*. So after deployment Lambda function has be manually invoked once.
 ```bash
 # Get list of deployed Lambda functions
@@ -159,7 +159,7 @@ $ awslocal lambda list-functions
 $ awslocal lambda invoke --function-name <function name> /dev/null
 ```
 
-Link to a local REST endpoint shall be printed on deployment console. Append resource name **exchangerates** to the link for exchange rates API
+Link to a local REST endpoint is printed on console after deployment. Append resource name **exchangerates** to the link for exchange rates API
 ```bash
 # Sample REST endpoint
 https://**********.execute-api.localhost.localstack.cloud:4566/prod/
