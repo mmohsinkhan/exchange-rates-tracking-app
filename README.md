@@ -1,7 +1,7 @@
 # Serverless Exchange Rates Tracking Application
 
 Exchange rates tracking application developed in AWS lambda environment, deployable using AWS CDK. 
-Exchange rates are collected from European Central Bank [website](https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html).
+Exchange rates data is collected from [European Central Bank](https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html).
 
 ## Components
 
