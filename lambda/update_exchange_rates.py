@@ -12,7 +12,7 @@ from datetime import datetime
 import boto3
 
 # Exchange rates zip file download link
-DOWNLOAD_URL = 'https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist.zip?1048261cdecbac43e8765bd8767b58ce'
+DOWNLOAD_URL = 'https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist.zip'
 
 # Logger
 LOGGER = logging.getLogger()
