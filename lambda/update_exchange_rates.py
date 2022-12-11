@@ -4,9 +4,9 @@ Lambda function code for updating exchanges rates in Dynamodb table.
 import os
 import io
 import csv
-import urllib
 import logging
 import zipfile
+import urllib.request
 from datetime import datetime
 
 import boto3
@@ -33,13 +33,13 @@ def handler(event, context):
     Lambda entry point.
     '''
     LOGGER.info('Getting exchange rates data from European Central Bank')
-    exchange_rates = get_exchange_rates()
+    date, exchange_rates = get_exchange_rates()
     LOGGER.info('Updating exchange rates in database')
-    update_exchange_rates(exchange_rates)
+    update_exchange_rates(date, exchange_rates)
     LOGGER.info('Job completed')
 
 
-def update_exchange_rates(exchange_rates):
+def update_exchange_rates(date, exchange_rates):
     '''
     Update exchange rates in database.
     '''
@@ -51,13 +51,14 @@ def update_exchange_rates(exchange_rates):
         for currency, data in exchange_rates.items():
             data['id'] = currency
             writer.put_item(Item=data)
-        # Date
-        writer.put_item(Item={'id': 'Date', 'value': datetime.utcnow().strftime('%Y-%m-%d')})
+        # Dates
+        writer.put_item(Item={'id': 'publish_date', 'value': date})
+        writer.put_item(Item={'id': 'update_date', 'value': datetime.utcnow().strftime('%Y-%m-%d')})
 
 
 def get_exchange_rates():
     '''
-    Get exchange rate data (current and difference) from European Central Bank API.
+    Get exchange rate data (current and difference) from European Central Bank.
     '''
     # Download zip file
     response = urllib.request.urlopen(DOWNLOAD_URL, timeout=30)
@@ -68,7 +69,7 @@ def get_exchange_rates():
         data = [row for row in csv_reader]
     # Latest and previous day exchange rates
     latest_rates = {k.strip(): v.strip() for k, v in data[0].items() if k.strip()}
-    latest_rates.pop('Date', None)
+    date = latest_rates.pop('Date', None)
     previous_rates = {k.strip(): v.strip() for k, v in data[1].items() if k.strip()}
     previous_rates.pop('Date', None)
     # Exchange rates document with current rates and difference
@@ -76,8 +77,16 @@ def get_exchange_rates():
     for currency, rate in latest_rates.items():
         if rate == 'N/A' or previous_rates.get(currency, 'N/A') == 'N/A':
             continue
-        diff = float(rate) - float(previous_rates[currency])
+        # Previous rate
+        p_rate = float(previous_rates[currency])
+        # Difference
+        diff = float(rate) - p_rate
         diff = round(diff, 4) or 0.0
+        # Difference in percentage
+        diff_percent = (diff / p_rate) * 100
+        diff_percent = round(diff_percent, 4) or 0.0
+        # Add sign to difference and percentage
         diff = f'+{diff}' if diff > 0 else f'{diff}'
-        exchange_rates[currency] = {'value': rate, 'diff': diff}
-    return exchange_rates
+        diff_percent = f'+{diff_percent} %' if diff_percent > 0 else f'{diff_percent} %'
+        exchange_rates[currency] = {'value': rate, 'diff': diff, 'diff_percent': diff_percent}
+    return date, exchange_rates

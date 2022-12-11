@@ -456,7 +456,7 @@
             'S3Bucket': dict({
               'Fn::Sub': 'cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}',
             }),
-            'S3Key': 'a0943dc5857d63dd0c69d3c9525c864d76f956efd2737e119412fe756c289e3b.zip',
+            'S3Key': '2c994800135cea0b73c63842370d19aaddc2ffc671ce61256eeef1a5c1f21ce1.zip',
           }),
           'Environment': dict({
             'Variables': dict({
@@ -571,7 +571,7 @@
         }),
         'Type': 'AWS::IAM::Policy',
       }),
-      'initexchangeratesCurrentVersion934DE3F71ca902eaf13a6c09ed83d7e3effe597b': dict({
+      'initexchangeratesCurrentVersion934DE3F783a4e28007457cbc13a2e3ce4daee02e': dict({
         'Properties': dict({
           'FunctionName': dict({
             'Ref': 'initexchangeratesEC0F2087',
@@ -589,7 +589,7 @@
             'S3Bucket': dict({
               'Fn::Sub': 'cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}',
             }),
-            'S3Key': 'a0943dc5857d63dd0c69d3c9525c864d76f956efd2737e119412fe756c289e3b.zip',
+            'S3Key': '2c994800135cea0b73c63842370d19aaddc2ffc671ce61256eeef1a5c1f21ce1.zip',
           }),
           'Environment': dict({
             'Variables': dict({
@@ -719,7 +719,7 @@
         ]),
         'Properties': dict({
           'HandlerArn': dict({
-            'Ref': 'initexchangeratesCurrentVersion934DE3F71ca902eaf13a6c09ed83d7e3effe597b',
+            'Ref': 'initexchangeratesCurrentVersion934DE3F783a4e28007457cbc13a2e3ce4daee02e',
           }),
           'ServiceToken': dict({
             'Fn::GetAtt': list([
@@ -764,7 +764,7 @@
             'S3Bucket': dict({
               'Fn::Sub': 'cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}',
             }),
-            'S3Key': 'a0943dc5857d63dd0c69d3c9525c864d76f956efd2737e119412fe756c289e3b.zip',
+            'S3Key': '2c994800135cea0b73c63842370d19aaddc2ffc671ce61256eeef1a5c1f21ce1.zip',
           }),
           'Environment': dict({
             'Variables': dict({

@@ -19,25 +19,32 @@ Once deployed, application exposes a REST API endpoint that provides latest exch
 ### Sample Response
 ```javascript
 {
-    "updated_at": "2022-12-10",
+    // Date at which exchanges rates have been refreshed by the application
+    "update_date": "2022-12-10",
+    // Date at which latest exchange rates were published by ECB
+    // Can be different from application date since ECB does not publish exchange rates during their "target closing days"
+    "publish_date": "2022-12-09",
     "base_currency": "EUR",
     "exchange_rates": [
         {
             "currency": "AUD",
             "rate": "1.5553",
-            "change": "-0.0037"
+            "change": "-0.0037",
+            "change_percentage": "-0.2373 %"
         },
         {
-            "currency": "ISK",
-            "rate": "149.5",
-            "change": "0.0"
+            "currency": "BGN",
+            "rate": "1.9558",
+            "change": "0.0",
+            "change_percentage": "0.0 %"
         },
         {
-            "currency": "USD",
-            "rate": "1.0559",
-            "change": "+0.004"
+            "currency": "BRL",
+            "rate": "5.5457",
+            "change": "+0.0577",
+            "change_percentage": "+1.0514 %"
         },
-		...
+        ...
     ]
 }
 ```

@@ -35,12 +35,15 @@ def handler(event, context):
         return {'statusCode': 200, 'body': json.dumps({'error': error}, indent=4)}
     # Construct response
     LOGGER.info('Constructing response')
-    response = {'updated_at': 'N/A', 'base_currency': 'EUR', 'exchange_rates': []}
+    response = {'update_date': 'N/A', 'publish_date': 'N/A', 'base_currency': 'EUR', 'exchange_rates': []}
     for item in items:
-        if item['id'] == 'Date':
-            response['updated_at'] = item['value']
+        if item['id'] in ('update_date', 'publish_date'):
+            response[item['id']] = item['value']
         else:
-            data = {'currency': item['id'], 'rate': item['value'], 'change': item['diff']}
+            data = {'currency':          item['id'],
+                    'rate':              item['value'],
+                    'change':            item['diff'],
+                    'change_percentage': item['diff_percent']}
             response['exchange_rates'].append(data)
     # Sort list by currency name
     response['exchange_rates'] = sorted(response['exchange_rates'], key=lambda x: x['currency'])
