@@ -63,6 +63,10 @@ Once deployed, application exposes a REST API endpoint that provides latest exch
 | pip        | 22.3            |
 | Localstack | 1.3.0           | 
 
+
+> **Note**
+> These instructions have been verified on Linux (Ubuntu 22.04).
+
 > **Note**
 > Make sure 'python3' executable is added to path and accessible using command line.
 
