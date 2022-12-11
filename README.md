@@ -14,7 +14,7 @@ Exchange rates data is collected from [European Central Bank](https://www.ecb.eu
 
 ## REST API
 
-Once deployed, application exposes a REST API endpoint providing current exchange rates along with the change with respect to previous day.
+Once deployed, application exposes a REST API endpoint that provides latest exchange rates published by ECB along with the change with respect to last published update.
 
 ### Sample Response
 ```javascript
