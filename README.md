@@ -105,7 +105,8 @@ Deploy application on AWS
 $ cdk deploy
 ```
 
-On successful deployment, link to a public REST endpoint is printed on console. Append resource name **exchangerates** to the link for exchange rates API
+On successful deployment, link to a public REST endpoint is printed on console. Append resource name **exchangerates** to the link for exchange rates API.
+Open API URL is browser or use utility like *curl* to fetch exchange rates data.
 ```bash
 # Sample REST endpoint
 https://**********.execute-api.us-east-1.amazonaws.com/prod/
@@ -159,7 +160,8 @@ $ awslocal lambda list-functions
 $ awslocal lambda invoke --function-name <function name> /dev/null
 ```
 
-Link to a local REST endpoint is printed on console after deployment. Append resource name **exchangerates** to the link for exchange rates API
+Link to a local REST endpoint is printed on console after deployment. Append resource name **exchangerates** to the link for exchange rates API.
+Open API URL is browser or use utility like *curl* to fetch exchange rates data.
 ```bash
 # Sample REST endpoint
 https://**********.execute-api.localhost.localstack.cloud:4566/prod/
