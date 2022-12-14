@@ -19,9 +19,9 @@ Once deployed, application exposes a REST API endpoint that provides latest exch
 ### Sample Response
 ```javascript
 {
-    // Date at which exchanges rates have been refreshed by the application
+    // Date on which exchanges rates have been refreshed by the application
     "update_date": "2022-12-10",
-    // Date at which latest exchange rates were published by ECB
+    // Date on which latest exchange rates were published by ECB
     // Can be different from application date since ECB does not publish exchange rates during their "target closing days"
     "publish_date": "2022-12-09",
     "base_currency": "EUR",
