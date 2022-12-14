@@ -23,7 +23,7 @@ else:
 
 def handler(event, context):
     '''
-    Lambda entry point.
+    Read exchanges rates of tracked currencies from the database.
     '''
     # Read exchange rates from database
     LOGGER.info('Reading exchange rates from database')

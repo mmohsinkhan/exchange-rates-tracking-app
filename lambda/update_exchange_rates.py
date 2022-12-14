@@ -30,7 +30,7 @@ else:
 
 def handler(event, context):
     '''
-    Lambda entry point.
+    Update exchange rates in database.
     '''
     LOGGER.info('Getting exchange rates data from European Central Bank')
     date, exchange_rates = get_exchange_rates()
