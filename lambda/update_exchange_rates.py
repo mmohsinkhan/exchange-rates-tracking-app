@@ -2,17 +2,17 @@
 Lambda function code for updating exchanges rates in Dynamodb table.
 '''
 import os
-import io
-import csv
+import sys
 import logging
-import zipfile
+import urllib.error
 import urllib.request
 from datetime import datetime
+import xml.etree.ElementTree as ET
 
 import boto3
 
-# Exchange rates zip file download link
-DOWNLOAD_URL = 'https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist.zip'
+# Exchange rates XML file download link
+DOWNLOAD_URL = 'https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml'
 
 # Logger
 LOGGER = logging.getLogger()
@@ -60,22 +60,38 @@ def get_exchange_rates():
     '''
     Get exchange rate data (current and difference) from European Central Bank.
     '''
-    # Download zip file
-    response = urllib.request.urlopen(DOWNLOAD_URL, timeout=30)
-    # Extract zip file and read data from csv
-    with zipfile.ZipFile(io.BytesIO(response.read())) as zip_file:
-        csv_file = zip_file.open(zip_file.namelist()[0])
-        csv_reader = csv.DictReader(io.TextIOWrapper(csv_file, 'utf-8'))
-        data = [row for row in csv_reader]
-    # Latest and previous day exchange rates
-    latest_rates = {k.strip(): v.strip() for k, v in data[0].items() if k.strip()}
-    date = latest_rates.pop('Date', None)
-    previous_rates = {k.strip(): v.strip() for k, v in data[1].items() if k.strip()}
-    previous_rates.pop('Date', None)
+    # Download XML file having exchange rates data
+    try:
+        response = urllib.request.urlopen(DOWNLOAD_URL, timeout=30)
+    except urllib.error.URLError as err:
+        LOGGER.critical('Failed to download exchange rates data from %s', DOWNLOAD_URL)
+        LOGGER.critical(err)
+        sys.exit(1)
+    xml_data = response.read()
+    # Parser XML and read exchange rates of last 2 days
+    data = []
+    doc = ET.fromstring(xml_data)
+    for i, x in enumerate(doc.find('{http://www.ecb.int/vocabulary/2002-08-01/eurofxref}Cube')):
+        daily_data = {
+            'date': x.attrib['time'].strip(),
+            'rates': {y.attrib['currency'].strip(): y.attrib['rate'].strip() for y in x}
+        }
+        data.append(daily_data)
+        if i == 1:
+            break
+    # Log error and exit if data parsing fails
+    if len(data) < 2:
+        LOGGER.critical('Failed to read exchange rates from XML: %s', DOWNLOAD_URL)
+        sys.exit(1)
+    # Latest rates
+    date = data[0]['date']
+    latest_rates = data[0]['rates']
+    # Previous day rates
+    previous_rates = data[1]['rates']
     # Exchange rates document with current rates and difference
     exchange_rates = {}
     for currency, rate in latest_rates.items():
-        if rate == 'N/A' or previous_rates.get(currency, 'N/A') == 'N/A':
+        if currency not in previous_rates:
             continue
         # Previous rate
         p_rate = float(previous_rates[currency])
